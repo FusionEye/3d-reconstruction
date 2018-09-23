@@ -40,9 +40,9 @@ cloud_filtered = cloud.copyPointCloud()
 # cvCreateTrackbar("X_limit", "picture", &a, 30, NULL);
 # cvCreateTrackbar("Y_limit", "picture", &b, 30, NULL);
 # cvCreateTrackbar("Z_limit", "picture", &c, 30, NULL);
-opencv.cvCreateTrackbar("X_limit", "picture", &a, 30)
-opencv.cvCreateTrackbar("Y_limit", "picture", &b, 30)
-opencv.cvCreateTrackbar("Z_limit", "picture", &c, 30)
+opencv.cvCreateTrackbar("X_limit", "picture", a, 30)
+opencv.cvCreateTrackbar("Y_limit", "picture", b, 30)
+opencv.cvCreateTrackbar("Z_limit", "picture", c, 30)
 
 # // Starting the while loop where we continually filter with limits using trackbars and display pointcloud
 # char last_c = 0;

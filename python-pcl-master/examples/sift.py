@@ -7,16 +7,16 @@ import pcl.pcl_visualization
 # pcl::PointCloud<pcl::PointNormal>::Ptr Surface_normals(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud)
 # {
 #     pcl::NormalEstimation<pcl::PointXYZ, pcl::PointNormal> ne;
-#     ne.setInputCloud (cloud);//–@ü‚ÌŒvZ‚ğs‚¢‚½‚¢“_ŒQ‚ğw’è‚·‚é
+#     ne.setInputCloud (cloud);//ï¿½@ï¿½ï¿½ï¿½ÌŒvï¿½Zï¿½ï¿½ï¿½sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½Qï¿½ï¿½ï¿½wï¿½è‚·ï¿½ï¿½
 # 
-#     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ> ());//KDTREE‚ğì‚é
-#     ne.setSearchMethod (tree);//ŒŸõ•û–@‚ÉKDTREE‚ğw’è‚·‚é
+#     pcl::search::KdTree<pcl::PointXYZ>::Ptr tree (new pcl::search::KdTree<pcl::PointXYZ> ());//KDTREEï¿½ï¿½ï¿½ï¿½ï¿½
+#     ne.setSearchMethod (tree);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½@ï¿½ï¿½KDTREEï¿½ï¿½ï¿½wï¿½è‚·ï¿½ï¿½
 # 
-#     pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals (new pcl::PointCloud<pcl::PointNormal>);//–@üî•ñ‚ğ“ü‚ê‚é•Ï”
+#     pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals (new pcl::PointCloud<pcl::PointNormal>);//ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïï¿½
 # 
-#     ne.setRadiusSearch (0.5);//ŒŸõ‚·‚é”¼Œa‚ğw’è‚·‚é
+#     ne.setRadiusSearch (0.5);//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½é”¼ï¿½aï¿½ï¿½ï¿½wï¿½è‚·ï¿½ï¿½
 # 
-#     ne.compute (*cloud_normals);//–@üî•ñ‚Ìo—Íæ‚ğw’è‚·‚é
+#     ne.compute (*cloud_normals);//ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½Ìoï¿½Íï¿½ï¿½ï¿½wï¿½è‚·ï¿½ï¿½
 # 
 #     return cloud_normals;
 # }
@@ -36,7 +36,7 @@ def Surface_normals(cloud):
 
 # pcl::PointCloud<pcl::PointWithScale> Extract_SIFT(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals)
 # {    
-#     // SIFT“Á’¥—ÊŒvZ‚Ì‚½‚ß‚Ìƒpƒ‰ƒ[ƒ^
+#     // SIFTï¿½ï¿½ï¿½ï¿½ï¿½ÊŒvï¿½Zï¿½Ì‚ï¿½ï¿½ß‚Ìƒpï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½^
 #     const float min_scale = 0.01f;
 #     const int n_octaves = 3;
 #     const int n_scales_per_octave = 4;
@@ -73,13 +73,13 @@ def Extract_SIFT(cloud, cloud_normals):
 # pcl::io::loadPCDFile<pcl::PointXYZ> (argv[1], *cloud);
 # cloud = pcl.load("table_scene_mug_stereo_textured.pcd")
 # cloud = pcl.load('./examples/pcldata/tutorials/table_scene_mug_stereo_textured.pcd')
-cloud = pcl.load('./tests/tutorials/bunny.pcd')
+cloud = pcl.load('../tests/tutorials/bunny.pcd')
 print("cloud points : " + str(cloud.size))
 
 # pcl::PointCloud<pcl::PointNormal>::Ptr cloud_normals (new pcl::PointCloud<pcl::PointNormal>);
 cloud_normals = Surface_normals(cloud)
 
-# XYZ‚Ìî•ñ‚ğcloud‚©‚çSurface_normals(cloud)‚ÉXYZ‚Æ‚µ‚Ä‰Á‚¦‚é
+# XYZï¿½Ìï¿½ï¿½ï¿½cloudï¿½ï¿½ï¿½ï¿½Surface_normals(cloud)ï¿½ï¿½XYZï¿½Æ‚ï¿½ï¿½Ä‰ï¿½ï¿½ï¿½ï¿½ï¿½
 # for(size_t i = 0; i < cloud_normals->points.size(); ++i)
 # {
 #     cloud_normals->points[i].x = cloud->points[i].x;
@@ -87,14 +87,14 @@ cloud_normals = Surface_normals(cloud)
 #     cloud_normals->points[i].z = cloud->points[i].z;
 # }
 
-# // ‹Šo‰»‚Ì‚½‚ßSIFTŒvZ‚ÌŒ‹‰Ê‚ğcloud_temp‚ÉƒRƒs[
+# // ï¿½ï¿½ï¿½oï¿½ï¿½ï¿½Ì‚ï¿½ï¿½ï¿½SIFTï¿½vï¿½Zï¿½ÌŒï¿½ï¿½Ê‚ï¿½cloud_tempï¿½ÉƒRï¿½sï¿½[
 # pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_temp (new pcl::PointCloud<pcl::PointXYZ>);
 # copyPointCloud(Extract_SIFT(cloud, cloud_normals), *cloud_temp);
 # std::cout << "SIFT points in the cloud_temp are " << cloud_temp->points.size () << std::endl;
 cloud_temp = Extract_SIFT(cloud, cloud_normals)
 print('SIFT points in the cloud_temp are ' + str(cloud_temp.size))
 
-# // “ü—Í“_ŒQ‚ÆŒvZ‚³‚ê‚½“Á’¥“_‚ğ•\¦
+# // ï¿½ï¿½ï¿½Í“_ï¿½Qï¿½ÆŒvï¿½Zï¿½ï¿½ï¿½ê‚½ï¿½ï¿½ï¿½ï¿½ï¿½_ï¿½ï¿½\ï¿½ï¿½
 # pcl::visualization::PCLVisualizer viewer("PCL Viewer");
 # pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> keypoints_color_handler (cloud_temp, 0, 255, 0);
 # pcl::visualization::PointCloudColorHandlerCustom<pcl::PointXYZ> cloud_color_handler (cloud, 255, 0, 0);

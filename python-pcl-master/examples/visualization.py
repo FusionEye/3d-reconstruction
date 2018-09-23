@@ -7,7 +7,7 @@ import pcl
 import pcl.pcl_visualization
 # from pcl.pcl_registration import icp, gicp, icp_nl
 
-cloud = pcl.load_XYZRGB('./examples/pcldata/tutorials/table_scene_mug_stereo_textured.pcd')
+cloud = pcl.load_XYZRGB('../examples/pcldata/tutorials/table_scene_mug_stereo_textured.pcd')
 visual = pcl.pcl_visualization.CloudViewing()
 
 # PointXYZ

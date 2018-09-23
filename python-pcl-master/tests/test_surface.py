@@ -16,7 +16,7 @@ from nose.plugins.attrib import attr
 class TestConcaveHull(unittest.TestCase):
 
     def setUp(self):
-        self.p = pcl.load("tests" + os.path.sep + "flydracyl.pcd")
+        self.p = pcl.load("../tests" + os.path.sep + "flydracyl.pcd")
         self.surf = self.p.make_ConcaveHull()
         # self.surf = pcl.ConcaveHull()
         # self.surf.setInputCloud()
@@ -35,7 +35,7 @@ class TestConcaveHull(unittest.TestCase):
 class TestMovingLeastSquares(unittest.TestCase):
 
     def setUp(self):
-        self.p = pcl.load("tests" + os.path.sep + "flydracyl.pcd")
+        self.p = pcl.load("../tests" + os.path.sep + "flydracyl.pcd")
         self.surf = self.p.make_moving_least_squares()
 
     def testFilter(self):
