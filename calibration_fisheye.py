@@ -53,7 +53,7 @@ def get_K_and_D(checkerboard, imgsPath):
             imgpoints.append(corners)
 
             # 给图片画上角点
-            # img = cv2.drawChessboardCorners(img, (checkerboard[0], checkerboard[1]), corners2, ret)
+            img = cv2.drawChessboardCorners(img, (checkerboard[0], checkerboard[1]), corners2, ret)
             # cv2.imwrite('images/201809162257_with_button/out/' + os.path.basename(fname), img)
 
     N_OK = len(objpoints)
@@ -88,8 +88,6 @@ def get_K_and_D(checkerboard, imgsPath):
     print("DIM=" + str(_img_shape[::-1]))
     print("K=np.array(" + str(K.tolist()) + ")")
     print("D=np.array(" + str(D.tolist()) + ")")
-    print("rvecs=" + str(rvecs))
-    print("tvecs=" + str(tvecs))
 
     return DIM, K, D
 
@@ -99,4 +97,5 @@ def get_K_and_D(checkerboard, imgsPath):
 # checkerboard： 棋盘格的格点数目
 # imgsPath: 存放鱼眼图片的路径
 '''
-get_K_and_D((6, 8), 'images/out_no_button/*.JPG')
+# get_K_and_D((6, 8), 'images/out_no_button/*.JPG')
+get_K_and_D((6, 8), 'images/201809162223_no_button/right/*.JPG')
