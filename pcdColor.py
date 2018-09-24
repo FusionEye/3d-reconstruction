@@ -45,20 +45,45 @@ def point2dTo3d(n, m, d, camera):
 
 
 # 点云上色
-def AddColorToPCDFile(filename):
-    with open(filename, 'rb') as f:
+def addColorToPCDFile(depthFilePath, pcdOriginFilePath, pcdTargetFilePath, rgbFilePath):
+    depth = cv2.imread(depthFilePath, cv2.COLOR_BGR2GRAY)
+    rgb = cv2.imread(rgbFilePath)
+    if len(depth[0][0]) == 3:
+        depth = cv2.cvtColor(depth, cv2.COLOR_BGR2GRAY)
+
+    colors = []
+    rows = len(depth)
+    cols = len(depth[0])
+    for m in range(0, rows):
+        for n in range(0, cols):
+            d = depth[m][n]
+            if d == 0:
+                pass
+            else:
+                b = rgb[m][n][0]
+                g = rgb[m][n][1]
+                r = rgb[m][n][2]
+                color = (r << 16) | (g << 8) | b
+                colors.append(int(color))
+
+    with open(pcdOriginFilePath, 'rb') as f:
         lines = f.readlines()
     lines[2] = lines[2].split('\n')[0] + ' rgb\n'
     lines[3] = lines[3].split('\n')[0] + ' 4\n'
     lines[4] = lines[4].split('\n')[0] + ' I\n'
     lines[5] = lines[5].split('\n')[0] + ' 1\n'
-    with open(filename, 'wb') as fw:
+
+    print('pcd lines: ' + str(len(lines)))
+    print('colors: ' + str(len(colors)))
+
+    for i in range(11, len(colors) + 11):
+        lines[i] = lines[i].split('\n')[0] + ' ' + str(colors[i - 11]) + '\n'
+    with open(pcdTargetFilePath, 'wb') as fw:
         fw.writelines(lines)
 
 
 # 灰度图转pcd
-def imageToPointCloud(RGBFilename, DepthFilename, CloudFilename, camera):
-    rgb = cv2.imread(RGBFilename)
+def imageToPointCloud(DepthFilename, CloudFilename, camera):
     depth = cv2.imread(DepthFilename, cv2.COLOR_BGR2GRAY)
     # ROS中rqt保存的深度摄像头的图片是rgb格式，需要转换成单通道灰度格式
     if len(depth[0][0]) == 3:
@@ -68,7 +93,6 @@ def imageToPointCloud(RGBFilename, DepthFilename, CloudFilename, camera):
     rows = len(depth)
     cols = len(depth[0])
     pointcloud = []
-    colors = []
     for m in range(0, rows):
         for n in range(0, cols):
             d = depth[m][n]
@@ -77,17 +101,13 @@ def imageToPointCloud(RGBFilename, DepthFilename, CloudFilename, camera):
             else:
                 point = point2dTo3d(n, m, d, camera)
                 pointcloud.append(point)
-                b = rgb[m][n][0]
-                g = rgb[m][n][1]
-                r = rgb[m][n][2]
-                color = (r << 16) | (g << 8) | b
-                colors.append(int(color))
     pointcloud = np.array(pointcloud, dtype=np.float32)
     cloud.from_array(pointcloud)
     pcl.save(cloud, CloudFilename, format='pcd')
 
 
-pcdViewer('./pcd/cloud.pcd')
-camera = CameraIntrinsicParameters(3.6927587384670619e+02, 2.0049685183455608e+02,
-                                   6.0782982475382448e+02, 6.0782982475382448e+02, 1000.0)
+# pcdViewer('./pcd/cloud.pcd')
+# camera = CameraIntrinsicParameters(3.6927587384670619e+02, 2.0049685183455608e+02,
+#                                    6.0782982475382448e+02, 6.0782982475382448e+02, 1000.0)
 # imageToPointCloud('slam/rgb.png', 'slam/depth.png', 'pcd/cloud.pcd', camera)
+addColorToPCDFile('slam/depth.png', 'pcd/cloud.pcd', 'pcd/cloud_colorful.pcd', 'slam/rgb.png')
