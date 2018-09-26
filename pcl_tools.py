@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import numpy as np
 import pcl
@@ -43,6 +45,6 @@ def outPointCloud(points, out):
 
 if __name__ == '__main__':
     # 这个目录由ros命令生成， rosrun pcl_ros bag_to_pcd xxx.bag /hokuyo_points pcd
-    points = mergePointcloud("/home/leon/Downloads/pcd/")
+    points = mergePointcloud("/home/fred/Documents/bagfiles/pcd/")
     # 输出
-    outPointCloud(points, "/home/leon/Downloads/pcd/cloud.pcd")
+    outPointCloud(points, "/home/fred/Documents/pcd/cloud.pcd")
