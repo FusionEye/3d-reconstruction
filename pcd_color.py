@@ -106,8 +106,8 @@ def imageToPointCloud(DepthFilename, CloudFilename, camera):
     pcl.save(cloud, CloudFilename, format='pcd')
 
 
-# pcdViewer('./pcd/cloud.pcd')
+# pcdViewer('./pcd/cloud_origin.pcd')
 # camera = CameraIntrinsicParameters(3.6927587384670619e+02, 2.0049685183455608e+02,
 #                                    6.0782982475382448e+02, 6.0782982475382448e+02, 1000.0)
-# imageToPointCloud('slam/rgb.png', 'slam/depth.png', 'pcd/cloud.pcd', camera)
-addColorToPCDFile('slam/depth.png', 'pcd/cloud.pcd', 'pcd/cloud_colorful.pcd', 'slam/rgb.png')
+# imageToPointCloud('slam/rgb.png', 'slam/depth.png', 'pcd/cloud_origin.pcd', camera)
+addColorToPCDFile('slam/depth.png', 'pcd/cloud_origin.pcd', 'pcd/cloud_colorful.pcd', 'slam/rgb.png')
