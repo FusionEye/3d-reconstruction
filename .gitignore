@@ -3,5 +3,4 @@
 venv/
 venv-ubuntu/
 /images/
-build/
-output/
+/output/

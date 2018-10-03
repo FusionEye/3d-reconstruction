@@ -45,6 +45,6 @@ def outPointCloud(points, out):
 
 if __name__ == '__main__':
     # 这个目录由ros命令生成， rosrun pcl_ros bag_to_pcd xxx.bag /hokuyo_points pcd
-    points = mergePointcloud("/home/fred/Documents/bagfiles/pcd/")
+    points = mergePointcloud("/home/fred/Documents/task00/shanghai/bagfiles/2018-10-03-09-10-19/")
     # 输出
-    outPointCloud(points, "/home/fred/Documents/pcd/cloud.pcd")
+    outPointCloud(points, "/home/fred/Documents/task00/shanghai/pcd/2018-10-03-09-10-19.pcd")

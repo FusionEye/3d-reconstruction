@@ -6,41 +6,45 @@ import pcl
 import readyaml
 from PIL import Image
 
-CalibrationDataFile = '../camera.yml'
-OriginCloudFilename = '/home/fred/git/3d-reconstruction/pcd/home/cloud.pcd'
-RGBFileNamePath = '/home/fred/git/3d-reconstruction/images/pcd_on_color/20181001161152.JPG'
-OutputCloudFilename = './cloud.pcd'
+CalibrationDataFile = '/home/fred/git/3d-reconstruction/slam/camera.yml'
+OriginCloudFilename = '/home/fred/Documents/task00/shanghai/pcd/2018-10-03-09-10-19.pcd'
+RGBFileNamePath = '/home/fred/git/3d-reconstruction/images/pcd_on_color/right/20181001161152.JPG'
+OutputCloudFilename = '/home/fred/Documents/task00/shanghai/pcd/2018-10-03-09-10-19_colorful.pcd'
 
 CameraIntrinsicData, DistortionCoefficients = readyaml.parseYamlFile(CalibrationDataFile)
 
 # 点云数据
-# 空调右下角靠墙 1.46 0.46 -0.41
-# 空调右下角外面 1.40 0.40 -0.00
-# 空调右上角外面 1.99 0.67 -0.20
-# 灯右下角 1.88 -0.42 0.49
-# 灯右上角 1.90 -0.40 0.86
+# 螂头左下角
+# 螂头夹角
+# 空调右下角靠墙
+# 灯右下角
+# 灯右上角
+# 房间右上角
 pts_obj = np.array([
-    (1.46, 0.46, -0.41),
-    (1.40, 0.40, -0.00),
-    (1.99, 0.40, -0.20),
-    (1.88, -0.42, 0.49),
-    (1.90, -0.40, 0.86)
+    (0.23, -0.50, -0.57),
+    (0.28, -0.62, -0.52),
+    (0.98, 0.63, -0.67),
+    (1.43, -0.28, 0.23),
+    (1.44, -0.25, 0.61),
+    (1.42, -1.86, -0.64)
 ], dtype=np.float32)
 
 # 照片数据
+# 螂头左下角
+# 螂头夹角
 # 空调右下角靠墙
-# 空调右下角外面
-# 空调右上角外面
 # 灯右下角
 # 灯右上角
+# 房间右上角
 pts_img = np.array([
-    (1284, 894),
-    (1239, 774),
-    (1251, 693),
-    (1836, 291),
-    (1842, 153)
+    (2154, 1284),
+    (2211, 1220),
+    (1274, 886),
+    (1842, 294),
+    (1824, 147),
+    (2301, 807)
 ], dtype=np.float32)
-pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((5, 1, 2))
+pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((6, 1, 2))
 
 # 畸变参数
 DistortionCoefficients = np.zeros((4, 1))
