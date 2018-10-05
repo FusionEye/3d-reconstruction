@@ -2,9 +2,7 @@
 
 import cv2
 import numpy as np
-import pcl
 import readyaml
-from PIL import Image
 
 CalibrationDataFile = '/home/fred/git/3d-reconstruction/slam/camera.yml'
 OriginCloudFilename = '/home/fred/git/3d-reconstruction/pcd/home/cloud.pcd'
@@ -56,14 +54,15 @@ inliers = None
 retval, rvec, tvec, inliers = cv2.solvePnPRansac(pts_obj, pts_img, cameraMatrix, DistortionCoefficients,
                                                  useExtrinsicGuess=False, iterationsCount=100, reprojectionError=1)
 
-print "旋转矩阵： "
+print("旋转矩阵： ")
 print(rvec)
-print "平移矩阵： "
+print("平移矩阵： ")
 print(tvec)
 print(inliers)
-print "pnp结果： "
+print("pnp结果： ")
 print(retval)
 
 for pt_obj in pts_obj:
-    (end_point_2d, jacobian) = cv2.projectPoints(np.array([(pt_obj[0], pt_obj[1], pt_obj[2])]), rvec, tvec, cameraMatrix, DistortionCoefficients)
-    print end_point_2d
+    (end_point_2d, jacobian) = cv2.projectPoints(np.array([(pt_obj[0], pt_obj[1], pt_obj[2])]), rvec, tvec,
+                                                 cameraMatrix, DistortionCoefficients)
+    print(end_point_2d)
