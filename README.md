@@ -1,10 +1,16 @@
 # 3d重建
 
-分割图片
-python fusioneye imageSplit test/*.JPG output
+分割图片:
+python fusioneye images_plit test/*.JPG output
 
-合成点云
+bag生成pcd:
+rosrun pcl_ros bag_to_pcd xxx.bag /hokuyo_points pcd_folder
 
-点云图片坐标系校准
+合成点云:
+python merge_pcd pcd_folder xxx.pcd
 
-点云上色
+点云图片坐标系校准:
+
+
+点云上色:
+

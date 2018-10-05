@@ -5,7 +5,7 @@ import numpy as np
 import pcl
 
 
-def mergePointcloud(path):
+def merge_point_cloud(path):
     # 初始化矩阵大小
     pathDir = os.listdir(path)
     shape = (9999999, 3)
@@ -37,14 +37,14 @@ def mergePointcloud(path):
     return points
 
 
-def outPointCloud(points, out):
+def out_point_cloud(points, out):
     cloud = pcl.PointCloud()
     cloud.from_array(points)
     pcl.save(cloud, out)
 
 
-if __name__ == '__main__':
+def merge_point_cloud_to_pcd(pcdPath, outputPcd):
     # 这个目录由ros命令生成， rosrun pcl_ros bag_to_pcd xxx.bag /hokuyo_points pcd
-    points = mergePointcloud("/home/fred/Documents/task00/shanghai/bagfiles/2018-10-03-09-10-19/")
+    points = merge_point_cloud(pcdPath)
     # 输出
-    outPointCloud(points, "/home/fred/Documents/task00/shanghai/pcd/2018-10-03-09-10-19.pcd")
+    out_point_cloud(points, outputPcd)

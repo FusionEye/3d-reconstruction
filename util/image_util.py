@@ -5,7 +5,7 @@ import os
 import glob
 
 
-def spliteRicohImages(inputPath, outPath):
+def split_ricoh_images(inputPath, outPath):
     # 图片路径
     images = glob.glob(inputPath)
 
