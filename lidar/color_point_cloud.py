@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import time
 import cv2
 import numpy as np
 from util import read_yaml
@@ -53,15 +54,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
     retval, rvec, tvec, inliers = cv2.solvePnPRansac(pts_obj, pts_img, cameraMatrix, DistortionCoefficients,
                                                      useExtrinsicGuess=False, iterationsCount=100, reprojectionError=1)
 
-    print("旋转矩阵： ")
-    print(rvec)
-    print("平移矩阵： ")
-    print(tvec)
-    print(inliers)
-    print("pnp结果： ")
-    print(retval)
-
-    # (end_point_2d, jacobian) = cv2.projectPoints(np.array([(1.90, -0.40, 0.86)]), rvec, tvec, cameraMatrix, DistortionCoefficients)
+    print("旋转矩阵：\n{0}\n平移矩阵：\n{1}\ninliers:\n{2}\npnp结果:\n{3}".format(rvec, tvec, inliers, retval))
 
     # 获取点云数据
     with open(OriginCloudFilename, 'rb') as f:
@@ -77,7 +70,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
     lines[6] = 'WIDTH ' + str(totalLine - 11) + '\n'
     lines[9] = 'POINTS ' + str(totalLine - 11) + '\n'
 
-    print('pcd lines: ' + str(len(lines)))
+    print('pcd lines: {0}'.format(totalLine))
 
     # 加载图像
     img_src = Image.open(RGBFileNamePath)
@@ -85,6 +78,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
     pix = img_src.load()
 
     # 遍历点云
+    prev_progress = 0.00
     for i in range(11, totalLine):
         p1 = float(lines[i].split(' ')[0])
         p2 = float(lines[i].split(' ')[1])
@@ -92,7 +86,13 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
         # 获取3d对应的2d坐标
         (end_point_2d, jacobian) = cv2.projectPoints(np.array([(p1, p2, p3)]), rvec, tvec, cameraMatrix,
                                                      DistortionCoefficients)
-        print(end_point_2d)
+
+        # 显示进度
+        current_progress = ((i + 1.0) * 100 / totalLine)
+        if current_progress >= (prev_progress + 10):
+            prev_progress = current_progress
+            print('%s, 进度： %.2f%%' % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), current_progress))
+
         # 获得2d坐标对应的颜色
         x = end_point_2d[0][0][0]
         y = end_point_2d[0][0][1]
