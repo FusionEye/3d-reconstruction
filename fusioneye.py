@@ -3,6 +3,7 @@
 import sys
 from util.image_util import split_ricoh_images
 from lidar.hokuyo.pcl_tools import merge_point_cloud_to_pcd
+from lidar.color_point_cloud import color_pcd
 
 if __name__ == '__main__':
     # 分割图片
@@ -11,3 +12,6 @@ if __name__ == '__main__':
     # 点云合成
     if sys.argv[1] == 'merge_pcd':
         merge_point_cloud_to_pcd(sys.argv[2], sys.argv[3])
+    # 点云上色
+    if sys.argv[1] == 'color_pcd':
+        color_pcd(sys.argv[2], sys.argv[3], sys.argv[4])

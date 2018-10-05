@@ -13,4 +13,4 @@ python merge_pcd pcd_folder xxx.pcd
 
 
 点云上色:
-
+python color_pcd input.pcd xxx.JPG output.pcd

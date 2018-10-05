@@ -2,14 +2,14 @@
 
 import cv2
 import numpy as np
-import readyaml
+from util import read_yaml
 
-CalibrationDataFile = '/home/fred/git/3d-reconstruction/slam/camera.yml'
+CalibrationDataFile = 'config/camera.yml'
 OriginCloudFilename = '/home/fred/git/3d-reconstruction/pcd/home/cloud.pcd'
 RGBFileNamePath = '/home/fred/git/3d-reconstruction/images/pcd_on_color/20181001161152.JPG'
 OutputCloudFilename = './cloud.pcd'
 
-CameraIntrinsicData, DistortionCoefficients = readyaml.parseYamlFile(CalibrationDataFile)
+CameraIntrinsicData, DistortionCoefficients = read_yaml.parseYamlFile(CalibrationDataFile)
 
 # 点云数据
 # 螂头左下角
