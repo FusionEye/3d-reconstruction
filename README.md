@@ -1,5 +1,8 @@
 # 3d重建
 
+pcd转ply:
+pcl_pcd2ply xxx.pcd xxx.ply
+
 分割图片:
 python fusioneye.py images_plit test/*.JPG output
 
