@@ -24,7 +24,7 @@ def merge_point_cloud(path):
             z = tmp_cloud[i][2]
 
             # 过滤无用的点
-            if (abs(x) > 10 or abs(y) > 10 or abs(z) > 10):
+            if (abs(x) > 10.0 or abs(y) > 10.0 or abs(z) > 10.0):
                 continue
 
             points[row][0] = x

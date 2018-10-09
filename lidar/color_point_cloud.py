@@ -12,35 +12,23 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
     CameraIntrinsicData, DistortionCoefficients = read_yaml.parseYamlFile(CalibrationDataFile)
 
     # 点云数据
-    # 螂头左下角
-    # 螂头夹角
-    # 空调右下角靠墙
-    # 灯右下角
-    # 灯右上角
-    # 房间右上角
     pts_obj = np.array([
-        (0.23, -0.50, -0.57),
-        (0.28, -0.62, -0.52),
-        (0.98, 0.63, -0.67),
-        (1.43, -0.28, 0.23),
-        (1.44, -0.25, 0.61),
-        (1.42, -1.86, -0.64)
+        (1.265592, 1.910337, 0.082096),
+        (1.248772, 1.920148, 0.682424),
+        (-0.262132, 3.050739, 1.336622),
+        (1.486778, 0.630351, 1.128295),
+        (1.161838, 3.230030, 1.407530),
+        (0.919682, -1.172692, 1.557984)
     ], dtype=np.float32)
 
     # 照片数据
-    # 螂头左下角
-    # 螂头夹角
-    # 空调右下角靠墙
-    # 灯右下角
-    # 灯右上角
-    # 房间右上角
     pts_img = np.array([
-        (2154, 1284),
-        (2211, 1220),
-        (1274, 886),
-        (1842, 294),
-        (1824, 147),
-        (2301, 807)
+        (1040, 1308),
+        (1020, 1144),
+        (832, 1180),
+        (1340, 964),
+        (804, 1056),
+        (2048, 788)
     ], dtype=np.float32)
     pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((6, 1, 2))
 
@@ -96,12 +84,12 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
         # 获得2d坐标对应的颜色
         x = end_point_2d[0][0][0]
         y = end_point_2d[0][0][1]
-        if x > 2895:
-            x = 2895
+        if x > 5375:
+            x = 5375
         if x <= 0:
             x = 0
-        if y > 2895:
-            y = 2895
+        if y > 2687:
+            y = 2687
         if y <= 0:
             y = 0
         r, g, b = pix[x, y]

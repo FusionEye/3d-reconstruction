@@ -11,14 +11,14 @@ def test_split_image():
 
 
 def test_merge_pcd():
-    merge_point_cloud_to_pcd('/home/fred/Documents/task00/shanghai/bagfiles/2018-10-03-09-10-19/',
-                             '/home/fred/Documents/task00/shanghai/pcd/2018-10-03-09-10-19.pcd')
+    merge_point_cloud_to_pcd('/mnt/hgfs/PycharmProjects/ml/input/2018-10-08-29/',
+                             '/mnt/hgfs/PycharmProjects/ml/input/2018-10-08-29.pcd')
 
 
 def test_color_pcd():
-    color_pcd('/home/fred/Documents/task00/shanghai/pcd/2018-10-03-09-10-19.pcd',
-              '/home/fred/git/3d-reconstruction/images/pcd_on_color/right/20181001161152.JPG',
-              '/home/fred/Documents/task00/shanghai/pcd/2018-10-03-09-10-19_colorful.pcd')
+    color_pcd('/mnt/hgfs/PycharmProjects/ml/input/2018-10-08-29.pcd',
+              '/mnt/hgfs/下载/R0010034.JPG',
+              '/mnt/hgfs/PycharmProjects/ml/output/colorful.pcd')
 
 
 if __name__ == '__main__':

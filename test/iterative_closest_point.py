@@ -6,8 +6,8 @@ import pcl
 import numpy as np
 
 
-cloud_in = pcl.load('/home/fred/Documents/task00/shanghai/pcd/20181007.pcd')
-cloud_out = pcl.load('/home/fred/Documents/task00/shanghai/pcd/2018100800.pcd')
+cloud_in = pcl.load('/mnt/hgfs/PycharmProjects/ml/input/2018-10-08-23-00.pcd')
+cloud_out = pcl.load('/mnt/hgfs/PycharmProjects/ml/input/2018-10-08-23-01.pcd')
 
 print('Transformed ' + str(cloud_in.size) + ' data points:')
 
@@ -31,4 +31,4 @@ for item in cloud_in:
 
 cloud = pcl.PointCloud()
 cloud.from_array(np.array(pointcloud, dtype=np.float32))
-pcl.save(cloud, '/home/fred/Documents/task00/shanghai/pcd/20181007_trans.pcd')
+pcl.save(cloud, '/mnt/hgfs/PycharmProjects/ml/input/2018-10-08-23-00-trans.pcd')
