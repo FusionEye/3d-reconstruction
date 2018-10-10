@@ -5,5 +5,6 @@
 venv/
 venv-ubuntu/
 /images/
-/input/
+/input/*.JPG
+/input/*.txt
 /output/
