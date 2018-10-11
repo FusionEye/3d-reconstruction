@@ -27,8 +27,11 @@ you will need:
     * 图像坐标和点云坐标文件: input/imageAndPcd.txt
     * 图像文件: input/image.JPG
     * 点云文件夹: input/pointCloud
-    * 输出有色点云: output/colourfulPointCloud.pcd
 
 4. Run coloring command: 
 
     ``` python fusioneye.py color_pcd ```
+    
+5. Output colorful pcd file:
+
+    输出有色点云: output/colourfulPointCloud.pcd
