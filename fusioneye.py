@@ -17,6 +17,9 @@ if __name__ == '__main__':
         argvLen = len(sys.argv)
 
         if argvLen == 2:
+            # 合成点云
+            merge_point_cloud_to_pcd('./input/pointCloud/', './input/pointCloud.pcd')
+
             color_pcd('./input/pointCloud.pcd', './input/image.JPG', './output')
         if argvLen == 5:
             color_pcd(sys.argv[2], sys.argv[3], sys.argv[4])

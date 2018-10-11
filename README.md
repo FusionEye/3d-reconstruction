@@ -16,9 +16,9 @@ input/imageAndPcd.txt
 
 input/image.JPG
 
-点云文件:
+点云文件夹:
 
-input/pointCloud.pcd
+input/pointCloud
 
 输出有色点云:
 

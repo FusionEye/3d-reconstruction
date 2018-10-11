@@ -14,6 +14,13 @@ def merge_point_cloud(path):
     row = 0
     for allDir in pathDir:
         pcdFile = os.path.join('%s%s' % (path, allDir))
+
+        # 判断文件大小
+        fsize = os.path.getsize(pcdFile)
+        fsize = fsize / float(1024 * 1024)
+        if fsize < 1:
+            continue
+
         print(pcdFile)
         tmp_cloud = pcl.load(pcdFile)
         print('cloud(size) = ' + str(tmp_cloud.size))
