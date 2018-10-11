@@ -1,29 +1,34 @@
 # 3d重建
 
-点云可视化: 
+### USAGE:
+ 
+Use pcd file with panoramic image to colorize the point cloud to realistic 3D rendering. 
 
-pcl_viewer xxx.pcd -use_point_picking
+you will need: 
+* a panoramic photo
+* a pointcloud file
+* relating point cloud (x,y,z) positions
+* correlating pixel position (x,y) in the same scene
 
-shift + 鼠标左键点击可以获取点云坐标
+### PROCEDURE
 
----
+1. Picking (x,y,z) from point cloud:
 
-图像坐标和点云坐标文件:
+    ``` pcl_viewer xxx.pcd -use_point_picking ```
 
-input/imageAndPcd.txt
+    shift + 鼠标左键点击可以获取点云坐标
 
-图像文件:
+2. Picking relative image pixel (x,y) from image file:
 
-input/image.JPG
+    use a gimp or equivalent image software
 
-点云文件夹:
+3. Prepare source data folder:
 
-input/pointCloud
+    * 图像坐标和点云坐标文件: input/imageAndPcd.txt
+    * 图像文件: input/image.JPG
+    * 点云文件夹: input/pointCloud
+    * 输出有色点云: output/colourfulPointCloud.pcd
 
-输出有色点云:
+4. Run coloring command: 
 
-output/colourfulPointCloud.pcd
-
-上色命令:
-
-python fusioneye.py color_pcd
+    ``` python fusioneye.py color_pcd ```
