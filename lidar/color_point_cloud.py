@@ -5,32 +5,33 @@ import cv2
 import numpy as np
 from util import read_yaml
 from PIL import Image
+import os
 
 
-def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
+def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     CalibrationDataFile = 'config/camera.yml'
     CameraIntrinsicData, DistortionCoefficients = read_yaml.parseYamlFile(CalibrationDataFile)
 
-    # 点云数据
-    pts_obj = np.array([
-        (1.265592, 1.910337, 0.082096),
-        (1.248772, 1.920148, 0.682424),
-        (-0.262132, 3.050739, 1.336622),
-        (1.486778, 0.630351, 1.128295),
-        (1.161838, 3.230030, 1.407530),
-        (0.919682, -1.172692, 1.557984)
-    ], dtype=np.float32)
+    # 获取点云照片标定点
+    with open('./input/imageAndPcd.txt', 'rb') as f:
+        img_pcd_points = f.readlines()
 
+    real_points_num = len(img_pcd_points) - 1
+    print(real_points_num)
+    # 点云数据
+    pts_obj = np.zeros((real_points_num, 3), dtype=np.float32)
     # 照片数据
-    pts_img = np.array([
-        (1040, 1308),
-        (1020, 1144),
-        (832, 1180),
-        (1340, 964),
-        (804, 1056),
-        (2048, 788)
-    ], dtype=np.float32)
-    pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((6, 1, 2))
+    pts_img = np.zeros((real_points_num, 2), dtype=np.float32)
+
+    for i in range(1, len(img_pcd_points)):
+        pos_list = img_pcd_points[i].split(',')
+
+        pts_obj[i - 1] = (float(pos_list[0]), float(pos_list[1]), float(pos_list[2]))
+        pts_img[i - 1] = (float(pos_list[3]), float(pos_list[4].split('\n')[0]))
+
+    print(pts_obj)
+    print(pts_img)
+    pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((real_points_num, 1, 2))
 
     # 畸变参数
     DistortionCoefficients = np.zeros((4, 1))
@@ -49,7 +50,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
         lines = f.readlines()
 
     totalLine = len(lines)
-    # totalLine = 20000
+    # totalLine = 2000
 
     lines[2] = lines[2].split('\n')[0] + ' rgb\n'
     lines[3] = lines[3].split('\n')[0] + ' 4\n'
@@ -95,5 +96,10 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilename):
         r, g, b = pix[x, y]
         lines[i] = lines[i].split('\n')[0] + ' ' + str((r << 16) | (g << 8) | b) + '\n'
 
-    with open(OutputCloudFilename, 'wb') as fw:
+    # 创建目录
+    output = os.path.exists(OutputCloudFilePath)
+    if not output:
+        os.makedirs(OutputCloudFilePath)
+
+    with open(OutputCloudFilePath + '/colourfulPointCloud.pcd', 'wb') as fw:
         fw.writelines(lines[:totalLine])

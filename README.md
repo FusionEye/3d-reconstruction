@@ -10,7 +10,7 @@ shift + 鼠标左键点击可以获取点云坐标
 
 图像坐标和点云坐标文件:
 
-input/imageAndPcdPoint.txt
+input/imageAndPcd.txt
 
 图像文件:
 

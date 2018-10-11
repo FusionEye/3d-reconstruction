@@ -14,4 +14,9 @@ if __name__ == '__main__':
         merge_point_cloud_to_pcd(sys.argv[2], sys.argv[3])
     # 点云上色
     if sys.argv[1] == 'color_pcd':
-        color_pcd(sys.argv[2], sys.argv[3], sys.argv[4])
+        argvLen = len(sys.argv)
+
+        if argvLen == 2:
+            color_pcd('./input/pointCloud.pcd', './input/image.JPG', './output')
+        if argvLen == 5:
+            color_pcd(sys.argv[2], sys.argv[3], sys.argv[4])
