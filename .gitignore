@@ -6,6 +6,7 @@ venv/
 venv-ubuntu/
 /images/
 /input/*.JPG
-/input/*.pcd
+/input/**/*.pcd
 /input/*.txt
+/input/*.bag
 /output/
