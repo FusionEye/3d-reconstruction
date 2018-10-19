@@ -3,7 +3,6 @@
 .idea/
 
 venv/
-venv-ubuntu/
 /images/
 /input/*.JPG
 /input/**/*.pcd
