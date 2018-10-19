@@ -1,6 +1,6 @@
 # 3d重建
 
-### USAGE:
+### USAGE
  
 Use pcd file with panoramic image to colorize the point cloud to realistic 3D rendering. 
 
