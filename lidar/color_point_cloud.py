@@ -19,7 +19,6 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     real_points_len = 1
     for i in range(1, len(img_pcd_points)):
         if len(img_pcd_points[i].split(',')) > 4:
-            print(img_pcd_points[i])
             real_points_len = real_points_len + 1
 
     print(real_points_len)
