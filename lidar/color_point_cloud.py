@@ -16,14 +16,20 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     with open('./input/imageAndPcd.txt', 'rb') as f:
         img_pcd_points = f.readlines()
 
-    real_points_num = len(img_pcd_points) - 1
+    real_points_num = 0
+    for i in range(1, len(img_pcd_points)):
+        if len(img_pcd_points[i].split(',')) > 4:
+            print(img_pcd_points[i])
+            real_points_num = real_points_num + 1
+
     print(real_points_num)
+
     # 点云数据
     pts_obj = np.zeros((real_points_num, 3), dtype=np.float32)
     # 照片数据
     pts_img = np.zeros((real_points_num, 2), dtype=np.float32)
 
-    for i in range(1, len(img_pcd_points)):
+    for i in range(1, real_points_num):
         pos_list = img_pcd_points[i].split(',')
 
         pts_obj[i - 1] = (float(pos_list[0]), float(pos_list[1]), float(pos_list[2]))
@@ -63,6 +69,8 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
 
     # 加载图像
     img_src = Image.open(RGBFileNamePath)
+    img_w = img_src.size[0] - 1
+    img_h = img_src.size[1] - 1
     # img_src = img_src.convert('RGBA')
     pix = img_src.load()
 
@@ -85,12 +93,12 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
         # 获得2d坐标对应的颜色
         x = end_point_2d[0][0][0]
         y = end_point_2d[0][0][1]
-        if x > 5375:
-            x = 5375
+        if x > img_w:
+            x = img_w
         if x <= 0:
             x = 0
-        if y > 2687:
-            y = 2687
+        if y > img_h:
+            y = img_h
         if y <= 0:
             y = 0
         r, g, b = pix[x, y]

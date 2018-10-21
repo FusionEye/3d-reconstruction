@@ -3,9 +3,8 @@
 .idea/
 
 venv/
+venv-ubuntu/
 /images/
-/input/*.JPG
-/input/**/*.pcd
-/input/*.txt
-/input/*.bag
+!/input/*.sample
+/input/
 /output/
