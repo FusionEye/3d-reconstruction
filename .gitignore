@@ -7,4 +7,5 @@ venv-ubuntu/
 /images/
 !/input/*.sample
 /input/
+/docker-input/
 /output/

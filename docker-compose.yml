@@ -1,0 +1,11 @@
+version: '2.1'
+services:
+  ubuntu:
+    image: registry.cn-hangzhou.aliyuncs.com/fredgoo/3d-reconstruction:0.0.1
+    container_name: ubuntu_lxde_vnc00
+    ports:
+     - "6080:80"
+    volumes:
+     - ./docker-input:/root/Desktop/3d-reconstruction-master/input
+    environment:
+     - HTTP_PASSWORD=123
