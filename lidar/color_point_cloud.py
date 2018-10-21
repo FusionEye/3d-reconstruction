@@ -35,9 +35,9 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
         pts_obj[i - 1] = (float(pos_list[0]), float(pos_list[1]), float(pos_list[2]))
         pts_img[i - 1] = (float(pos_list[3]), float(pos_list[4].split('\n')[0]))
 
+    pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((real_points_num, 1, 2))
     print(pts_obj)
     print(pts_img)
-    pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((real_points_num, 1, 2))
 
     # 畸变参数
     DistortionCoefficients = np.zeros((4, 1))
