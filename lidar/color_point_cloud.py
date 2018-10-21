@@ -16,20 +16,21 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     with open('./input/imageAndPcd.txt', 'rb') as f:
         img_pcd_points = f.readlines()
 
-    real_points_num = 0
+    real_points_len = 1
     for i in range(1, len(img_pcd_points)):
         if len(img_pcd_points[i].split(',')) > 4:
             print(img_pcd_points[i])
-            real_points_num = real_points_num + 1
+            real_points_len = real_points_len + 1
 
-    print(real_points_num)
+    print(real_points_len)
 
+    real_points_num = real_points_len - 1
     # 点云数据
     pts_obj = np.zeros((real_points_num, 3), dtype=np.float32)
     # 照片数据
     pts_img = np.zeros((real_points_num, 2), dtype=np.float32)
 
-    for i in range(1, real_points_num):
+    for i in range(1, real_points_len):
         pos_list = img_pcd_points[i].split(',')
 
         pts_obj[i - 1] = (float(pos_list[0]), float(pos_list[1]), float(pos_list[2]))
@@ -43,6 +44,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     DistortionCoefficients = np.zeros((4, 1))
 
     cameraMatrix = np.matrix(CameraIntrinsicData)
+    print(cameraMatrix)
     rvec = None
     tvec = None
     inliers = None
