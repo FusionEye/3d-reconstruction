@@ -12,9 +12,17 @@ you will need:
 
 ### PROCEDURE
 
+0. Converting ros bag to pcd:
+    
+    ``` rosrun pcl_ros bag_to_pcd xxx.bag /hokuyo_points input/pointCloud ```
+    
+0. Merging pcd files to one:
+
+    ``` python fusioneye.py merge_pcd ```
+    
 1. Picking (x,y,z) from point cloud:
 
-    ``` pcl_viewer xxx.pcd -use_point_picking ```
+    ``` pcl_viewer input/pointCloud.pcd -use_point_picking ```
 
     shift + 鼠标左键点击可以获取点云坐标
 
@@ -26,7 +34,6 @@ you will need:
 
     * 图像坐标和点云坐标文件: input/imageAndPcd.txt
     * 图像文件: input/image.JPG
-    * 点云文件夹: input/pointCloud
 
 4. Run coloring command: 
 
