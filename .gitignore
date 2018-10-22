@@ -8,4 +8,5 @@ venv-ubuntu/
 !/input/*.sample
 /input/
 /docker-input/
+/docker-output/
 /output/

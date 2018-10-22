@@ -7,5 +7,6 @@ services:
      - "6080:80"
     volumes:
      - ./docker-input:/root/Desktop/3d-reconstruction-master/input
+     - ./docker-output:/root/Desktop/3d-reconstruction-master/output
     environment:
      - HTTP_PASSWORD=123
