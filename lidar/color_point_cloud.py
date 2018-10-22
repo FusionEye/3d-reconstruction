@@ -61,7 +61,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
 
     lines[2] = lines[2].split('\n')[0] + ' rgb\n'
     lines[3] = lines[3].split('\n')[0] + ' 4\n'
-    lines[4] = lines[4].split('\n')[0] + ' I\n'
+    lines[4] = lines[4].split('\n')[0] + ' F\n'
     lines[5] = lines[5].split('\n')[0] + ' 1\n'
     lines[6] = 'WIDTH ' + str(totalLine - 11) + '\n'
     lines[9] = 'POINTS ' + str(totalLine - 11) + '\n'

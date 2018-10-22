@@ -18,7 +18,7 @@ if __name__ == '__main__':
 
         if argvLen == 2:
             # 合成点云
-            merge_point_cloud_to_pcd('./input/pointCloud/', './input/pointCloud.pcd')
+            # merge_point_cloud_to_pcd('./input/pointCloud/', './input/pointCloud.pcd')
 
             color_pcd('./input/pointCloud.pcd', './input/image.JPG', './output')
         if argvLen == 5:
