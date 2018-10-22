@@ -32,12 +32,13 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     for i in range(1, real_points_len):
         pos_list = img_pcd_points[i].split(',')
 
-        pts_obj[i - 1] = (float(pos_list[0]), float(pos_list[1]), float(pos_list[2]))
-        pts_img[i - 1] = (float(pos_list[3]), float(pos_list[4].split('\n')[0]))
+        pts_obj[i - 1] = (float(pos_list[0].strip()), float(pos_list[1].strip()), float(pos_list[2].strip()))
+        pts_img[i - 1] = (float(pos_list[3].strip()), float(pos_list[4].strip()))
 
-    pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((real_points_num, 1, 2))
     print(pts_obj)
     print(pts_img)
+
+    pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((real_points_num, 1, 2))
 
     # 畸变参数
     DistortionCoefficients = np.zeros((4, 1))
@@ -48,7 +49,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     tvec = None
     inliers = None
     retval, rvec, tvec, inliers = cv2.solvePnPRansac(pts_obj, pts_img, cameraMatrix, DistortionCoefficients,
-                                                     useExtrinsicGuess=False, iterationsCount=100, reprojectionError=1)
+                                                     useExtrinsicGuess=False, iterationsCount=1000, reprojectionError=1)
 
     print("旋转矩阵：\n{0}\n平移矩阵：\n{1}\ninliers:\n{2}\npnp结果:\n{3}".format(rvec, tvec, inliers, retval))
 
@@ -61,7 +62,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
 
     lines[2] = lines[2].split('\n')[0] + ' rgb\n'
     lines[3] = lines[3].split('\n')[0] + ' 4\n'
-    lines[4] = lines[4].split('\n')[0] + ' F\n'
+    lines[4] = lines[4].split('\n')[0] + ' I\n'
     lines[5] = lines[5].split('\n')[0] + ' 1\n'
     lines[6] = 'WIDTH ' + str(totalLine - 11) + '\n'
     lines[9] = 'POINTS ' + str(totalLine - 11) + '\n'
