@@ -8,12 +8,9 @@ from PIL import Image
 import os
 
 
-def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
-    CalibrationDataFile = 'config/camera.yml'
-    CameraIntrinsicData, DistortionCoefficients = read_yaml.parseYamlFile(CalibrationDataFile)
-
+def get_pts(file_path):
     # 获取点云照片标定点
-    with open('./input/imageAndPcd.txt', 'rb') as f:
+    with open(file_path, 'rb') as f:
         img_pcd_points = f.readlines()
 
     real_points_len = 1
@@ -40,6 +37,13 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
 
     pts_img = np.ascontiguousarray(pts_img[:, :2]).reshape((real_points_num, 1, 2))
 
+    return pts_obj, pts_img
+
+
+def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
+    CalibrationDataFile = 'config/camera.yml'
+    CameraIntrinsicData, DistortionCoefficients = read_yaml.parseYamlFile(CalibrationDataFile)
+
     # 畸变参数
     DistortionCoefficients = np.zeros((4, 1))
 
@@ -48,8 +52,13 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     rvec = None
     tvec = None
     inliers = None
-    retval, rvec, tvec, inliers = cv2.solvePnPRansac(pts_obj, pts_img, cameraMatrix, DistortionCoefficients,
-                                                     useExtrinsicGuess=False, iterationsCount=1000, reprojectionError=1)
+
+    pts_obj, pts_img = get_pts('./input/imageAndPcd.txt')
+    # retval, rvec, tvec, inliers = cv2.solvePnPRansac(pts_obj, pts_img, cameraMatrix, DistortionCoefficients,
+    #                                                  useExtrinsicGuess=False, iterationsCount=300000,
+    #                                                  reprojectionError=3)
+    # retval, rvec, tvec = cv2.solvePnP(pts_obj, pts_img, cameraMatrix, DistortionCoefficients)
+    retval, rvec, tvec = cv2.solvePnP(pts_obj, pts_img, cameraMatrix, DistortionCoefficients, rvec, tvec, useExtrinsicGuess=False, flags=cv2.SOLVEPNP_ITERATIVE)
 
     print("旋转矩阵：\n{0}\n平移矩阵：\n{1}\ninliers:\n{2}\npnp结果:\n{3}".format(rvec, tvec, inliers, retval))
 
@@ -95,15 +104,27 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
         # 获得2d坐标对应的颜色
         x = end_point_2d[0][0][0]
         y = end_point_2d[0][0][1]
+        out = False
         if x > img_w:
             x = img_w
+            out = True
         if x <= 0:
             x = 0
+            out = True
         if y > img_h:
             y = img_h
+            out = True
         if y <= 0:
             y = 0
-        r, g, b = pix[x, y]
+            out = True
+
+        if out:
+            r = 0
+            g = 0
+            b = 0
+        else:
+            r, g, b = pix[x, y]
+
         lines[i] = lines[i].split('\n')[0] + ' ' + str((r << 16) | (g << 8) | b) + '\n'
 
     # 创建目录
