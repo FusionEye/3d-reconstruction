@@ -40,6 +40,17 @@ def get_pts(file_path):
     return pts_obj, pts_img
 
 
+def set_rvec_and_tvec(rvec, tvec):
+    rvec[0] = rvec[0] + 0
+    rvec[1] = rvec[1] - 0
+    rvec[2] = rvec[2] - 0
+
+    tvec[0] = tvec[0] - 0
+    tvec[1] = tvec[1] - 0.15
+    tvec[2] = tvec[2] - 0
+    return rvec, tvec
+
+
 def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     CalibrationDataFile = 'config/camera.yml'
     CameraIntrinsicData, DistortionCoefficients = read_yaml.parseYamlFile(CalibrationDataFile)
@@ -54,12 +65,18 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     inliers = None
 
     pts_obj, pts_img = get_pts('./input/imageAndPcd.txt')
-    # retval, rvec, tvec, inliers = cv2.solvePnPRansac(pts_obj, pts_img, cameraMatrix, DistortionCoefficients,
-    #                                                  useExtrinsicGuess=False, iterationsCount=300000,
-    #                                                  reprojectionError=3)
-    # retval, rvec, tvec = cv2.solvePnP(pts_obj, pts_img, cameraMatrix, DistortionCoefficients)
-    retval, rvec, tvec = cv2.solvePnP(pts_obj, pts_img, cameraMatrix, DistortionCoefficients, rvec, tvec, useExtrinsicGuess=False, flags=cv2.SOLVEPNP_ITERATIVE)
 
+    ransac = 1
+    if ransac == 1:
+        retval, rvec, tvec, inliers = cv2.solvePnPRansac(pts_obj, pts_img, cameraMatrix, DistortionCoefficients,
+                                                         useExtrinsicGuess=False, iterationsCount=300000,
+                                                         reprojectionError=1)
+    else:
+        retval, rvec, tvec = cv2.solvePnP(pts_obj, pts_img, cameraMatrix, DistortionCoefficients, rvec, tvec,
+                                          useExtrinsicGuess=False, flags=cv2.SOLVEPNP_P3P)
+
+    # 手动处理旋转
+    rvec, tvec = set_rvec_and_tvec(rvec, tvec)
     print("旋转矩阵：\n{0}\n平移矩阵：\n{1}\ninliers:\n{2}\npnp结果:\n{3}".format(rvec, tvec, inliers, retval))
 
     # 获取点云数据
@@ -119,9 +136,9 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
             out = True
 
         if out:
-            r = 0
-            g = 0
-            b = 0
+            r = 255
+            g = 255
+            b = 255
         else:
             r, g, b = pix[x, y]
 

@@ -7,7 +7,7 @@ from lidar.color_point_cloud import color_pcd
 
 
 def test_split_image():
-    split_ricoh_images('test/*.JPG', 'output/test')
+    split_ricoh_images('input/1642864653.jpg', 'output/test')
 
 
 def test_merge_pcd():

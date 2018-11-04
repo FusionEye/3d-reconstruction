@@ -66,6 +66,8 @@ print(retval)
 print("inliers结果： ")
 print(inliers)
 
+
+print(pts_img)
 for pt_obj in pts_obj:
     (end_point_2d, jacobian) = cv2.projectPoints(np.array([(pt_obj[0], pt_obj[1], pt_obj[2])]), rvec, tvec,
                                                  cameraMatrix, DistortionCoefficients)
