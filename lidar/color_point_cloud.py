@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from util import read_yaml
 from PIL import Image
+from struct import *
 import os
 
 
@@ -51,6 +52,10 @@ def set_rvec_and_tvec(rvec, tvec):
     return rvec, tvec
 
 
+def rgb2float(r, g, b, a=0):
+    return unpack('f', chr(b) + chr(g) + chr(r) + chr(a))[0]
+
+
 def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
     CalibrationDataFile = 'config/camera.yml'
     CameraIntrinsicData, DistortionCoefficients = read_yaml.parseYamlFile(CalibrationDataFile)
@@ -88,7 +93,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
 
     lines[2] = lines[2].split('\n')[0] + ' rgb\n'
     lines[3] = lines[3].split('\n')[0] + ' 4\n'
-    lines[4] = lines[4].split('\n')[0] + ' I\n'
+    lines[4] = lines[4].split('\n')[0] + ' F\n'
     lines[5] = lines[5].split('\n')[0] + ' 1\n'
     lines[6] = 'WIDTH ' + str(totalLine - 11) + '\n'
     lines[9] = 'POINTS ' + str(totalLine - 11) + '\n'
@@ -142,7 +147,7 @@ def color_pcd(OriginCloudFilename, RGBFileNamePath, OutputCloudFilePath):
         else:
             r, g, b = pix[x, y]
 
-        lines[i] = lines[i].split('\n')[0] + ' ' + str((r << 16) | (g << 8) | b) + '\n'
+        lines[i] = lines[i].split('\n')[0] + ' ' + str(rgb2float(r, g, b)) + '\n'
 
     # 创建目录
     output = os.path.exists(OutputCloudFilePath)
