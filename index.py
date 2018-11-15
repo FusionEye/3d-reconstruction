@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
-from os import curdir, sep
 import cgi
+from lidar.color_point_cloud import color_pcd
 
-PORT_NUMBER = 8080
+PORT_NUMBER = 3000
 
 
 class myHandler(BaseHTTPRequestHandler):
@@ -14,13 +14,32 @@ class myHandler(BaseHTTPRequestHandler):
             form = cgi.FieldStorage(
                 fp=self.rfile,
                 headers=self.headers,
-                environ={'REQUEST_METHOD': 'POST'
-                         })
+                environ={'REQUEST_METHOD': 'POST'})
 
-            print "Your name is: %s" % form["your_name"].value
+            # txt
+            field_item = form['txt']
+            filevalue = field_item.value
+            with open('./input/imageAndPcd.txt', 'wb') as f:
+                f.write(filevalue)
+
+            # image
+            field_item = form['image']
+            filevalue = field_item.value
+            with open('./input/image.JPG', 'wb') as f:
+                f.write(filevalue)
+
+            # pcd
+            field_item = form['pcd']
+            filevalue = field_item.value
+            with open('./input/pointCloud.pcd', 'wb') as f:
+                f.write(filevalue)
+
+            # 点云上色
+            # color_pcd('./input/pointCloud.pcd', './input/image.JPG', './output')
+
             self.send_response(200)
             self.end_headers()
-            self.wfile.write("Thanks %s !" % form["your_name"].value)
+            self.wfile.write(1)
             return
 
 
