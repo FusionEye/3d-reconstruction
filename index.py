@@ -2,6 +2,7 @@
 
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 import cgi
+import os
 from lidar.color_point_cloud import color_pcd
 
 PORT_NUMBER = 3000
@@ -35,7 +36,16 @@ class myHandler(BaseHTTPRequestHandler):
                 f.write(filevalue)
 
             # 点云上色
-            # color_pcd('./input/pointCloud.pcd', './input/image.JPG', './output')
+            color_pcd('./input/pointCloud.pcd', './input/image.JPG', './output')
+
+            # 转ply
+            os.system('pcl_pcd2ply ./output/colourfulPointCloud.pcd ./input/colourfulPointCloud.ply')
+
+            # 删除文件
+            os.system('rm -rf /var/www/html/*')
+
+            # 转potree
+            os.system('../potree/PotreeConverter ./output/colourfulPointCloud.ply -o /var/www/html -p index')
 
             self.send_response(200)
             self.end_headers()
