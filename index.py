@@ -39,7 +39,7 @@ class myHandler(BaseHTTPRequestHandler):
             color_pcd('./input/pointCloud.pcd', './input/image.JPG', './output')
 
             # 转ply
-            os.system('pcl_pcd2ply ./output/colourfulPointCloud.pcd ./input/colourfulPointCloud.ply')
+            os.system('pcl_pcd2ply ./output/colourfulPointCloud.pcd ./output/colourfulPointCloud.ply')
 
             # 删除文件
             os.system('rm -rf /var/www/html/*')
