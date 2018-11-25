@@ -3,9 +3,8 @@
 .idea/
 
 venv/
+python-pcl/
 /images/
 !/input/*.sample
 /input/
-/docker-input/
-/docker-output/
 /output/
